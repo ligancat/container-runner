@@ -3,7 +3,7 @@ name: Puppeteer Screenshot
 on:
   push:
     branches:
-      - main  # Adjust this to your default branch
+      - main
   pull_request:
     branches:
       - main
@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'  # Choose the Node.js version you prefer
+          node-version: '16'
 
       - name: Install Puppeteer
         run: |
@@ -35,7 +35,7 @@ jobs:
           echo "  const page = await browser.newPage();" >> script.js
           echo "  await page.goto('https://www.whatsmyipaddress.com');" >> script.js
           echo "  await setTimeout(4000); // Wait for 4 seconds" >> script.js
-          echo "  await page.screenshot({ path: 'screenshot.png' });" >> script.js
+          echo "  await page.screenshot({ path: 'screenshot.jpg', type: 'jpeg' });" >> script.js
           echo "  await browser.close();" >> script.js
           echo "}" >> script.js
           echo "run();" >> script.js
@@ -45,4 +45,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: screenshot
-          path: screenshot.png
+          path: screenshot.jpg
