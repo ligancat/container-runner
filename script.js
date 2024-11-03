@@ -29,6 +29,12 @@ async function run() {
     // Populate the email input
     await page.waitForSelector('input[name="email"]');
     await page.type('input[name="email"]', email);
+
+    await setTimeout(3000); // Wait for 4 seconds to let the next page load
+    
+    // Populate the password input
+    await page.waitForSelector('input[name="password"]');
+    await page.type('input[name="password"]', 'Jellyfish90@@@');
     
     // Wait before taking a screenshot
     await setTimeout(3000); // Wait for 3 seconds before taking a screenshot
