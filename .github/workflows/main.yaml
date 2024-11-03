@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install Firefox and dependencies
+      - name: Install Dependencies
         run: |
           sudo apt update
           sudo apt install -y firefox \
@@ -43,7 +43,7 @@ jobs:
 
       - name: Install Puppeteer
         run: |
-          npm install puppeteer
+          npm install puppeteer puppeteer-firefox
 
       - name: Run Puppeteer Script
         run: |
