@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-firefox'); // Import Puppeteer for Firefox
 const { setTimeout } = require('node:timers/promises');
 const fs = require('fs');
 const path = require('path');
@@ -23,7 +23,11 @@ async function saveEmailToFile(email) {
 }
 
 async function runIteration(iteration) {
-    const browser = await puppeteer.launch({ headless: true, userDataDir: './chrome-profile' });
+    const browser = await puppeteer.launch({ 
+        headless: true, 
+        product: 'firefox', // Specify Firefox
+        userDataDir: './firefox-profile' // Change user data directory if needed
+    });
     const page = await browser.newPage();
     
     // Navigate to emailnator.com
