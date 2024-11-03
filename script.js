@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const { setTimeout } = require('node:timers/promises');
 const fs = require('fs');
-const path = require('path'); // Import path module
+const path = require('path');
 
 async function extractEmail(page) {
     await setTimeout(4000); // Wait for 4 seconds
@@ -11,14 +11,15 @@ async function extractEmail(page) {
 }
 
 async function saveEmailToFile(email) {
-    const filePath = path.join(__dirname, 'accounts.txt'); // Define file path
-    fs.appendFileSync(filePath, email + '\n', (err) => {
-        if (err) {
-            console.error('Error writing to file:', err);
-        } else {
-            console.log('Email saved to accounts.txt');
-        }
-    });
+    const filePath = path.join(__dirname, 'screenshots', 'accounts.txt'); // Save in screenshots directory
+    try {
+        // Ensure the directory exists
+        fs.mkdirSync(path.dirname(filePath), { recursive: true });
+        fs.appendFileSync(filePath, email + '\n');
+        console.log('Email saved to accounts.txt in screenshots directory');
+    } catch (err) {
+        console.error('Error writing to file:', err);
+    }
 }
 
 async function run() {
@@ -68,9 +69,11 @@ async function run() {
 
     // Wait before taking a full-page screenshot
     await setTimeout(3000); // Wait for 3 seconds before taking a screenshot
-    await page.screenshot({ path: 'screenshot.jpg', type: 'jpeg', fullPage: true });
+    await page.screenshot({ path: 'screenshots/screenshot.jpg', type: 'jpeg', fullPage: true });
     
     await browser.close();
 }
 
-run().catch(error => console.error('Error:', error));
+run().catch(error => {
+    console.error('Error:', error);
+});
