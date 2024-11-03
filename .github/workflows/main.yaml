@@ -21,14 +21,17 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install Brave and Puppeteer
+      - name: Install Brave Browser and Puppeteer
         run: |
           sudo apt update
           sudo apt install -y wget gnupg2
-          echo "deb [arch=amd64] https://brave-browser-archive.s3.brave.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/brave.list
-          wget -qO - https://brave-browser-archive.s3.brave.com/brave-core.asc | gpg --dearmor | sudo tee /usr/share/keyrings/brave.gpg > /dev/null
-          sudo apt update
-          sudo apt install -y brave-browser
+          # Download Brave browser
+          wget -q --show-progress https://github.com/brave/brave-browser/releases/latest/download/brave-browser_*.deb
+          # Install Brave browser
+          sudo apt install -y ./brave-browser_*.deb
+          # Clean up the downloaded file
+          rm brave-browser_*.deb
+          # Install Puppeteer
           npm install puppeteer
 
       - name: Run Puppeteer Script
