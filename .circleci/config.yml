@@ -1,0 +1,32 @@
+version: 2.1
+
+executors:
+  ubuntu-executor:
+    docker:
+      - image: circleci/node:16
+
+jobs:
+  screenshot:
+    executor: ubuntu-executor
+    steps:
+      - checkout
+
+      - run:
+          name: Install Puppeteer
+          command: npm install puppeteer
+
+      - run:
+          name: Run Puppeteer Script
+          command: node script.js
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - screenshots/
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - screenshot
+
