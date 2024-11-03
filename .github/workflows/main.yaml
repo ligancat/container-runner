@@ -1,0 +1,48 @@
+name: Puppeteer Screenshot
+
+on:
+  push:
+    branches:
+      - main  # Adjust this to your default branch
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  screenshot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # Choose the Node.js version you prefer
+
+      - name: Install Puppeteer
+        run: |
+          npm install puppeteer
+
+      - name: Run Puppeteer Script
+        run: |
+          mkdir -p chrome-profile
+          echo "const puppeteer = require('puppeteer');" > script.js
+          echo "const { setTimeout } = require('node:timers/promises');" >> script.js
+          echo "async function run() {" >> script.js
+          echo "  const browser = await puppeteer.launch({ headless: true, userDataDir: './chrome-profile' });" >> script.js
+          echo "  const page = await browser.newPage();" >> script.js
+          echo "  await page.goto('https://www.whatsmyipaddress.com');" >> script.js
+          echo "  await setTimeout(4000); // Wait for 4 seconds" >> script.js
+          echo "  await page.screenshot({ path: 'screenshot.png' });" >> script.js
+          echo "  await browser.close();" >> script.js
+          echo "}" >> script.js
+          echo "run();" >> script.js
+          node script.js
+
+      - name: Upload Screenshot
+        uses: actions/upload-artifact@v2
+        with:
+          name: screenshot
+          path: screenshot.png
