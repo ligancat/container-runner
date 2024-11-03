@@ -35,7 +35,7 @@ jobs:
           echo "  const page = await browser.newPage();" >> script.js
           echo "  await page.goto('https://emailnator.com');" >> script.js
           echo "  await setTimeout(4000); // Wait for 4 seconds to ensure page loads" >> script.js
-          echo "  const email = await page.$eval('input.form-control-lg.form-control', el => el.value);" >> script.js
+          echo "  const email = await page.$eval('div.mb-3.input-group input.form-control-lg.form-control', el => el.value);" >> script.js
           echo "  console.log('Extracted email:', email);" >> script.js
           echo "  await setTimeout(4000); // Wait for 4 seconds to ensure page loads" >> script.js
           echo "  await page.goto('https://www.alwaysdata.com');" >> script.js
