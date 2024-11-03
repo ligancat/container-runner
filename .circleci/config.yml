@@ -22,7 +22,7 @@ jobs:
 
       - run:
           name: Move Script
-          command: cp ./script.js ./tmp/script.js  # Copy script.js to the tmp directory
+          command: cp ./script.js /tmp/script.js  # Copy script.js to the tmp directory
 
       - run:
           name: Run Puppeteer Script
