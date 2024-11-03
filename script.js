@@ -26,7 +26,8 @@ async function runIteration(iteration) {
     const browser = await puppeteer.launch({ 
         headless: true, 
         product: 'firefox', // Specify Firefox
-        userDataDir: './firefox-profile' // Change user data directory if needed
+        userDataDir: './chrome-profile',
+        timeout: 60000
     });
     const page = await browser.newPage();
     
