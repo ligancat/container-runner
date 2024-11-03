@@ -69,9 +69,9 @@ async function runIteration(iteration) {
 
     await setTimeout(2000); // Wait for 2 seconds
 
-    // Click the "Create my profile" button
-    await page.waitForSelector('button[type="submit"] .btn'); // Wait for the button to be visible
-    await page.click('button[type="submit"]'); // Click the button
+    // Click the span with text "Create my profile"
+    await page.waitForSelector('button[type="submit"] span'); // Wait for the span to be visible
+    await page.click('button[type="submit"] span'); // Click the span directly
 
     // Wait before taking a full-page screenshot
     await setTimeout(4000); // Wait for 3 seconds before taking a screenshot
