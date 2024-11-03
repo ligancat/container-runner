@@ -10,17 +10,19 @@ jobs:
     executor: ubuntu-executor
     working_directory: /tmp  # Use /tmp as the working directory
     steps:
+      - checkout  # Step to checkout your code from GitHub
+
       - run:
           name: Install Puppeteer
           command: npm install puppeteer
 
       - run:
           name: Move Script
-          command: cp script.js /tmp/script.js  # Update this path to your script location
+          command: cp script.js /tmp/script.js  # Copy script.js to /tmp
 
       - run:
           name: Run Puppeteer Script
-          command: node script.js
+          command: node /tmp/script.js  # Run the script from /tmp
 
       - run:
           name: Create Dummy Artifacts
