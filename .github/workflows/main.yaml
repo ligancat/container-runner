@@ -21,29 +21,15 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install Dependencies
+      - name: Install Brave and Puppeteer
         run: |
           sudo apt update
-          sudo apt install -y firefox \
-            libdbus-glib-1-2 \
-            libgtk-3-0 \
-            libx11-xcb1 \
-            libxcomposite1 \
-            libxcursor1 \
-            libxdamage1 \
-            libxi6 \
-            libxtst6 \
-            libxrandr2 \
-            libxss1 \
-            libasound2 \
-            libatk1.0-0 \
-            libgdk-pixbuf2.0-0 \
-            libpango-1.0-0 \
-            libcups2
-
-      - name: Install Puppeteer
-        run: |
-          npm install puppeteer puppeteer-firefox
+          sudo apt install -y wget
+          wget -qO - https://brave-browser-archive.s3.brave.com/brave-core.asc | sudo apt-key add -
+          echo "deb [arch=amd64] https://brave-browser-archive.s3.brave.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/brave.list
+          sudo apt update
+          sudo apt install -y brave-browser
+          npm install puppeteer
 
       - name: Run Puppeteer Script
         run: |
