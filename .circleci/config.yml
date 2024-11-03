@@ -23,10 +23,6 @@ jobs:
           name: List directory contents
           command: ls -R
 
-      - run:
-          name: Create workspace directory
-          command: mkdir -p /workspace/screenshots
-
       - persist_to_workspace:
           root: .
           paths:
@@ -38,10 +34,10 @@ jobs:
       - run:
           name: Move screenshots for artifacts
           command: |
-            mv screenshots/* /workspace/screenshots/
+            mv /workspace/screenshots/* screenshots/ || true
 
       - store_artifacts:
-          path: /workspace/screenshots
+          path: screenshots
           destination: screenshots
 
 workflows:
