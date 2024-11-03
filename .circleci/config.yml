@@ -8,7 +8,7 @@ executors:
 jobs:
   screenshot:
     executor: ubuntu-executor
-    working_directory: /tmp/project  # Use a specific subdirectory under /tmp
+    working_directory: /tmp  # Use a specific subdirectory under /tmp
     steps:
       - checkout  # Step to checkout your code from GitHub
 
