@@ -13,9 +13,33 @@ jobs:
       - checkout  # Step to checkout your code from GitHub
 
       - run:
-          name: Install Puppeteer
+          name: Install Dependencies for Puppeteer
           command: |
-            npm install puppeteer
+            sudo apt-get update
+            sudo apt-get install -y \
+              libnss3 \
+              libgconf-2-4 \
+              libxss1 \
+              libasound2 \
+              fonts-liberation \
+              libatk-bridge2.0-0 \
+              libgtk-3-0 \
+              libx11-xcb1 \
+              libxcomposite1 \
+              libxcursor1 \
+              libxrandr2 \
+              libxdamage1 \
+              libxi6 \
+              libxtst6 \
+              libxss1 \
+              libnss3-dev \
+              libx11-dev \
+              libgdk-pixbuf2.0-dev \
+              libglib2.0-dev
+
+      - run:
+          name: Install Puppeteer
+          command: npm install puppeteer
 
       - run:
           name: Ensure Script Permissions
