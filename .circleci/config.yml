@@ -10,8 +10,6 @@ jobs:
     executor: ubuntu-executor
     working_directory: /tmp  # Use /tmp as the working directory
     steps:
-      - checkout
-
       - run:
           name: Install Puppeteer
           command: npm install puppeteer
