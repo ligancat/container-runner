@@ -23,7 +23,17 @@ async function saveEmailToFile(email) {
 }
 
 async function runIteration(iteration) {
-    const browser = await puppeteer.launch({ headless: true, userDataDir: './chrome-profile' });
+    const browser = await puppeteer.launch({
+        headless: true,
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-gpu',
+            '--window-size=1280,800',
+        ],
+    }); // Fixed closing bracket
+
     const page = await browser.newPage();
     
     // Navigate to emailnator.com
@@ -74,7 +84,7 @@ async function runIteration(iteration) {
     await page.click('button[type="submit"] span'); // Click the span directly
 
     // Wait before taking a full-page screenshot
-    await setTimeout(4000); // Wait for 3 seconds before taking a screenshot
+    await setTimeout(4000); // Wait for 4 seconds before taking a screenshot
     await page.screenshot({ path: `screenshots/screenshot-${iteration}.jpg`, type: 'jpeg', fullPage: true });
     
     console.log(`Completed iteration ${iteration}/2`);
