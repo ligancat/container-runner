@@ -21,9 +21,9 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install Puppeteer
+      - name: Install Puppeteer with Firefox
         run: |
-          npm install puppeteer
+          npm install puppeteer-firefox
 
       - name: Run Puppeteer Script
         run: |
@@ -33,4 +33,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: screenshots
-          path: screenshots/  
+          path: screenshots/
