@@ -18,7 +18,7 @@ jobs:
 
       - run:
           name: Move Script
-          command: cp script.js ./script.js  # Copy script.js to the working directory
+          command: ./script.js ./tmp/script.js  # Copy script.js to the working directory
 
       - run:
           name: Run Puppeteer Script
