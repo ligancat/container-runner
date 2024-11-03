@@ -26,7 +26,7 @@ jobs:
 
       - run:
           name: Run Puppeteer Script
-          command: node ./tmp/script.js  # Run the script from the tmp directory
+          command: node /tmp/script.js  # Run the script from the tmp directory
 
       - run:
           name: Create Dummy Artifacts
