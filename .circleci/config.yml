@@ -19,6 +19,14 @@ jobs:
           name: Run Puppeteer Script
           command: node script.js
 
+      - run:
+          name: List directory contents
+          command: ls -R
+
+      - run:
+          name: Create workspace directory
+          command: mkdir -p /workspace/screenshots
+
       - persist_to_workspace:
           root: .
           paths:
@@ -30,7 +38,6 @@ jobs:
       - run:
           name: Move screenshots for artifacts
           command: |
-            mkdir -p /workspace/screenshots
             mv screenshots/* /workspace/screenshots/
 
       - store_artifacts:
