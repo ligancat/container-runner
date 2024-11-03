@@ -21,15 +21,20 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install Puppeteer with Firefox
+      - name: Install Firefox
         run: |
-          npm install puppeteer-firefox
+          sudo apt update
+          sudo apt install -y firefox
+
+      - name: Install Puppeteer
+        run: |
+          npm install puppeteer
 
       - name: Run Puppeteer Script
         run: |
           node script.js
 
-      - name: Upload Screenshot
+      - name: Upload Screenshots
         uses: actions/upload-artifact@v3
         with:
           name: screenshots
