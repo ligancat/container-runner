@@ -32,10 +32,10 @@ async function runIteration(iteration) {
             '--disable-gpu',
             '--window-size=1280,800',
         ],
-    }); // Fixed closing bracket
+    });
 
     const page = await browser.newPage();
-    
+
     // Navigate to emailnator.com
     await page.goto('https://emailnator.com');
     
@@ -85,7 +85,7 @@ async function runIteration(iteration) {
 
     // Wait before taking a full-page screenshot
     await setTimeout(4000); // Wait for 4 seconds before taking a screenshot
-    await page.screenshot({ path: `screenshot-${iteration}.jpg`, type: 'jpeg', fullPage: true });
+    await page.screenshot({ path: `screenshots/screenshot-${iteration}.jpg`, type: 'jpeg', fullPage: true });
     
     console.log(`Completed iteration ${iteration}/2`);
     await browser.close();
