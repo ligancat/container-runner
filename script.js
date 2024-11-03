@@ -1,11 +1,22 @@
 const puppeteer = require('puppeteer');
 const { setTimeout } = require('node:timers/promises');
+const fs = require('fs');
 
 async function extractEmail(page) {
     await setTimeout(4000); // Wait for 4 seconds
     const email = await page.$eval('div.mb-3.input-group input.form-control-lg.form-control', el => el.value);
     console.log('Extracted email:', email);
     return email;
+}
+
+async function saveEmailToFile(email) {
+    fs.appendFileSync('accounts.txt', email + '\n', (err) => {
+        if (err) {
+            console.error('Error writing to file:', err);
+        } else {
+            console.log('Email saved to accounts.txt');
+        }
+    });
 }
 
 async function run() {
@@ -17,6 +28,13 @@ async function run() {
     
     // Extract email from the page
     const email = await extractEmail(page);
+
+    await setTimeout(2000); // Wait for 4 seconds to let the next page load
+    
+    // Save the extracted email to accounts.txt
+    await saveEmailToFile(email);
+
+    await setTimeout(2000); // Wait for 4 seconds to let the next page load
     
     // Navigate to alwaysdata.com
     await page.goto('https://www.alwaysdata.com');
@@ -29,14 +47,12 @@ async function run() {
     // Populate the email input
     await page.waitForSelector('input[name="email"]');
     await page.type('input[name="email"]', email);
-
-    await setTimeout(3000); // Wait for 4 seconds to let the next page load
     
     // Populate the password input
     await page.waitForSelector('input[name="password"]');
     await page.type('input[name="password"]', 'Jellyfish90@@@');
 
-    await setTimeout(3000); // Wait for 4 seconds to let the next page load
+    await setTimeout(2000); // Wait for 4 seconds to let the next page load
 
     // Check the credit card validation checkbox
     await page.waitForSelector('input[name="credit_card_validation"]');
