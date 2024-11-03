@@ -30,14 +30,17 @@ jobs:
           mkdir -p chrome-profile
           echo "const puppeteer = require('puppeteer');" > script.js
           echo "const { setTimeout } = require('node:timers/promises');" >> script.js
+          echo "async function extractEmail(page) {" >> script.js
+          echo "  await setTimeout(4000); // Wait for 4 seconds" >> script.js
+          echo "  const email = await page.$eval('div.mb-3.input-group input.form-control-lg.form-control', el => el.value);" >> script.js
+          echo "  console.log('Extracted email:', email);" >> script.js
+          echo "  return email;" >> script.js
+          echo "}" >> script.js
           echo "async function run() {" >> script.js
           echo "  const browser = await puppeteer.launch({ headless: true, userDataDir: './chrome-profile' });" >> script.js
           echo "  const page = await browser.newPage();" >> script.js
           echo "  await page.goto('https://emailnator.com');" >> script.js
-          echo "  await setTimeout(4000); // Wait for 4 seconds to ensure page loads" >> script.js
-          echo "  const email = await page.$eval('#input.form-control-lg.form-control', el => el.value);" >> script.js
-          echo "  console.log('Extracted email:', email);" >> script.js
-          echo "  await setTimeout(4000); // Wait for 4 seconds to ensure page loads" >> script.js
+          echo "  const email = await extractEmail(page);" >> script.js
           echo "  await page.goto('https://www.alwaysdata.com');" >> script.js
           echo "  await setTimeout(4000); // Wait for 4 seconds before clicking the button" >> script.js
           echo "  await page.click('a.btn.free[href=\"/en/register/?d\"]');" >> script.js
@@ -48,7 +51,7 @@ jobs:
           echo "  await page.screenshot({ path: 'screenshot.jpg', type: 'jpeg' });" >> script.js
           echo "  await browser.close();" >> script.js
           echo "}" >> script.js
-          echo "run();" >> script.js
+          echo "run().catch(error => console.error('Error:', error));" >> script.js
           node script.js
 
       - name: Upload Screenshot
