@@ -36,9 +36,9 @@ async function run() {
     await page.waitForSelector('input[name="password"]');
     await page.type('input[name="password"]', 'Jellyfish90@@@');
     
-    // Wait before taking a screenshot
+    // Wait before taking a full-page screenshot
     await setTimeout(3000); // Wait for 3 seconds before taking a screenshot
-    await page.screenshot({ path: 'screenshot.jpg', type: 'jpeg' });
+    await page.screenshot({ path: 'screenshot.jpg', type: 'jpeg', fullPage: true });
     
     await browser.close();
 }
