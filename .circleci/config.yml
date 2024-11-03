@@ -26,20 +26,23 @@ jobs:
           command: node ./script.js  # Run the script from the working directory
 
       - run:
-          name: Create Dummy Artifacts
+          name: Move Artifacts
           command: |
             mkdir -p screenshots  # Ensure the screenshots directory exists
-            echo "my artifact file" > screenshots/artifact-1.txt
-            mkdir -p screenshots/artifacts
-            echo "my artifact files in a dir" > screenshots/artifacts/artifact-2.txt
+            mv screenshots/screenshot.jpg screenshots/  # Move the screenshot
+            mv accounts.txt screenshots/  # Move the accounts.txt
 
       - store_artifacts:
-          path: screenshots/artifact-1.txt
-          destination: artifact-file
+          path: screenshots/screenshot.jpg
+          destination: screenshot
 
       - store_artifacts:
-          path: screenshots/artifacts
-          destination: artifacts-dir
+          path: screenshots/accounts.txt
+          destination: accounts
+
+      - store_artifacts:
+          path: screenshots/
+          destination: screenshots-directory
 
 workflows:
   version: 2
