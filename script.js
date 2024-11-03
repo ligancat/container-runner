@@ -22,7 +22,7 @@ async function saveEmailToFile(email) {
     }
 }
 
-async function run() {
+async function runIteration(iteration) {
     const browser = await puppeteer.launch({ headless: true, userDataDir: './chrome-profile' });
     const page = await browser.newPage();
     
@@ -69,9 +69,16 @@ async function run() {
 
     // Wait before taking a full-page screenshot
     await setTimeout(3000); // Wait for 3 seconds before taking a screenshot
-    await page.screenshot({ path: 'screenshots/screenshot.jpg', type: 'jpeg', fullPage: true });
+    await page.screenshot({ path: `screenshots/screenshot-${iteration}.jpg`, type: 'jpeg', fullPage: true });
     
+    console.log(`Completed iteration ${iteration}/2`);
     await browser.close();
+}
+
+async function run() {
+    for (let i = 1; i <= 2; i++) {
+        await runIteration(i);
+    }
 }
 
 run().catch(error => {
