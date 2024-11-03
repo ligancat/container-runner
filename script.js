@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-firefox'); // Use puppeteer-firefox
 const { setTimeout } = require('node:timers/promises');
 const fs = require('fs');
 const path = require('path');
@@ -23,10 +23,9 @@ async function saveEmailToFile(email) {
 
 async function run() {
     const browser = await puppeteer.launch({ 
-        headless: true, 
-        executablePath: '/usr/bin/firefox', // Path to the installed Firefox
+        headless: true, // Ensure headless mode
         userDataDir: './firefox-profile',
-        timeout: 60000 // Increased timeout
+        timeout: 60000
     });
     const page = await browser.newPage();
     
@@ -61,7 +60,7 @@ async function run() {
 
     await page.click('button[type="submit"]'); // Click the submit button
     
-    await setTimeout(3000);
+    await setTimeout(4000);
     await page.screenshot({ path: 'screenshots/screenshot.jpg', type: 'jpeg', fullPage: true });
     
     await browser.close();
