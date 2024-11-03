@@ -33,7 +33,7 @@ jobs:
           echo "async function run() {" >> script.js
           echo "  const browser = await puppeteer.launch({ headless: true, userDataDir: './chrome-profile' });" >> script.js
           echo "  const page = await browser.newPage();" >> script.js
-          echo "  await page.goto('https://www.whatsmyipaddress.com');" >> script.js
+          echo "  await page.goto('https://www.whatismyipaddress.com');" >> script.js
           echo "  await setTimeout(4000); // Wait for 4 seconds" >> script.js
           echo "  await page.screenshot({ path: 'screenshot.jpg', type: 'jpeg' });" >> script.js
           echo "  await browser.close();" >> script.js
