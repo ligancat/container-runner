@@ -67,8 +67,14 @@ async function runIteration(iteration) {
     await page.waitForSelector('input[name="privacy_policy"]');
     await page.click('input[name="privacy_policy"]'); // Check the checkbox
 
+    await setTimeout(2000); // Wait for 2 seconds
+
+    // Click the "Create my profile" button
+    await page.waitForSelector('button[type="submit"] .btn'); // Wait for the button to be visible
+    await page.click('button[type="submit"]'); // Click the button
+
     // Wait before taking a full-page screenshot
-    await setTimeout(3000); // Wait for 3 seconds before taking a screenshot
+    await setTimeout(4000); // Wait for 3 seconds before taking a screenshot
     await page.screenshot({ path: `screenshots/screenshot-${iteration}.jpg`, type: 'jpeg', fullPage: true });
     
     console.log(`Completed iteration ${iteration}/2`);
