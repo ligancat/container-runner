@@ -1,10 +1,10 @@
-const puppeteer = require('puppeteer-firefox'); // Use puppeteer-firefox
+const puppeteer = require('puppeteer'); // Still using Puppeteer
 const { setTimeout } = require('node:timers/promises');
 const fs = require('fs');
 const path = require('path');
 
 async function extractEmail(page) {
-    await setTimeout(4000);
+    await setTimeout(4000); // Wait for 4 seconds
     const email = await page.$eval('div.mb-3.input-group input.form-control-lg.form-control', el => el.value);
     console.log('Extracted email:', email);
     return email;
@@ -22,20 +22,20 @@ async function saveEmailToFile(email) {
 }
 
 async function run() {
-    const browser = await puppeteer.launch({ 
-        headless: true, // Ensure headless mode
-        userDataDir: './firefox-profile',
-        timeout: 60000
+    const browser = await puppeteer.launch({
+        headless: true,
+        executablePath: '/usr/bin/brave-browser', // Specify Brave executable
+        userDataDir: './chrome-profile'
     });
     const page = await browser.newPage();
     
     await page.goto('https://emailnator.com');
     const email = await extractEmail(page);
     
-    await setTimeout(2000);
+    await setTimeout(2000); // Wait for 2 seconds before saving the email
     await saveEmailToFile(email);
     
-    await setTimeout(2000);
+    await setTimeout(2000); // Wait for 2 seconds
     await page.goto('https://www.alwaysdata.com');
     await setTimeout(4000);
     
@@ -60,7 +60,7 @@ async function run() {
 
     await page.click('button[type="submit"]'); // Click the submit button
     
-    await setTimeout(4000);
+    await setTimeout(3000);
     await page.screenshot({ path: 'screenshots/screenshot.jpg', type: 'jpeg', fullPage: true });
     
     await browser.close();
