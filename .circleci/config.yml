@@ -8,6 +8,7 @@ executors:
 jobs:
   screenshot:
     executor: ubuntu-executor
+    working_directory: /tmp  # Use /tmp as the working directory
     steps:
       - checkout
 
@@ -19,14 +20,21 @@ jobs:
           name: Run Puppeteer Script
           command: node script.js
 
-      - persist_to_workspace:
-          root: .
-          paths:
-            - screenshots/
+      - run:
+          name: Create Dummy Artifacts
+          command: |
+            mkdir -p /tmp/screenshots  # Ensure the screenshots directory exists
+            echo "my artifact file" > /tmp/screenshots/artifact-1.txt
+            mkdir -p /tmp/screenshots/artifacts
+            echo "my artifact files in a dir" > /tmp/screenshots/artifacts/artifact-2.txt
 
       - store_artifacts:
-          path: screenshots
-          destination: screenshots
+          path: /tmp/screenshots/artifact-1.txt
+          destination: artifact-file
+
+      - store_artifacts:
+          path: /tmp/screenshots/artifacts
+          destination: artifacts-dir
 
 workflows:
   version: 2
