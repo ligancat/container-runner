@@ -19,22 +19,10 @@ jobs:
           name: Run Puppeteer Script
           command: node script.js
 
-      - run:
-          name: List directory contents
-          command: ls -R
-
       - persist_to_workspace:
           root: .
           paths:
             - screenshots/
-
-      - attach_workspace:
-          at: /workspace
-
-      - run:
-          name: Move screenshots for artifacts
-          command: |
-            mv /workspace/screenshots/* screenshots/ || true
 
       - store_artifacts:
           path: screenshots
