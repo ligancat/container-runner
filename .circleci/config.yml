@@ -15,6 +15,10 @@ jobs:
           command: npm install puppeteer
 
       - run:
+          name: Move Script
+          command: cp script.js /tmp/script.js  # Update this path to your script location
+
+      - run:
           name: Run Puppeteer Script
           command: node script.js
 
