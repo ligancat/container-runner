@@ -33,12 +33,16 @@ jobs:
           echo "async function run() {" >> script.js
           echo "  const browser = await puppeteer.launch({ headless: true, userDataDir: './chrome-profile' });" >> script.js
           echo "  const page = await browser.newPage();" >> script.js
+          echo "  await page.goto('https://emailnator.com');" >> script.js
+          echo "  await setTimeout(3000); // Wait for 4 seconds to ensure page loads" >> script.js
+          echo "  const email = await page.$eval('input[placeholder=\"Email Address\"]', el => el.value);" >> script.js
+          echo "  console.log('Extracted email:', email);" >> script.js
           echo "  await page.goto('https://www.alwaysdata.com');" >> script.js
           echo "  await setTimeout(3000); // Wait for 3 seconds before clicking the button" >> script.js
           echo "  await page.click('a.btn.free[href=\"/en/register/?d\"]');" >> script.js
           echo "  await setTimeout(3000); // Wait for 4 seconds to let the next page load" >> script.js
           echo "  await page.waitForSelector('input[name=\"email\"]');" >> script.js
-          echo "  await page.type('input[name=\"email\"]', 'test@example.com');" >> script.js
+          echo "  await page.type('input[name=\"email\"]', email);" >> script.js
           echo "  await setTimeout(3000); // Wait for 4 seconds to let the next page load" >> script.js
           echo "  await page.screenshot({ path: 'screenshot.jpg', type: 'jpeg' });" >> script.js
           echo "  await browser.close();" >> script.js
