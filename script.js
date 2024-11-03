@@ -35,7 +35,19 @@ async function run() {
     // Populate the password input
     await page.waitForSelector('input[name="password"]');
     await page.type('input[name="password"]', 'Jellyfish90@@@');
-    
+
+    await setTimeout(3000); // Wait for 4 seconds to let the next page load
+
+    // Check the credit card validation checkbox
+    await page.waitForSelector('input[name="credit_card_validation"]');
+    await page.click('input[name="credit_card_validation"]'); // Check the checkbox
+
+    await setTimeout(2000); // Wait for 4 seconds to let the next page load
+
+    // Check the privacy policy checkbox
+    await page.waitForSelector('input[name="privacy_policy"]');
+    await page.click('input[name="privacy_policy"]'); // Check the checkbox
+
     // Wait before taking a full-page screenshot
     await setTimeout(3000); // Wait for 3 seconds before taking a screenshot
     await page.screenshot({ path: 'screenshot.jpg', type: 'jpeg', fullPage: true });
