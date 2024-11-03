@@ -53,16 +53,8 @@ jobs:
           name: Move Artifacts
           command: |
             mkdir -p screenshots  # Ensure the screenshots directory exists
-            mv screenshots/screenshot.jpg screenshots/  # Move the screenshot
+            mv screenshot-*.jpg screenshots/  # Move all screenshots
             mv accounts.txt screenshots/  # Move the accounts.txt
-
-      - store_artifacts:
-          path: screenshots/screenshot.jpg
-          destination: screenshot
-
-      - store_artifacts:
-          path: screenshots/accounts.txt
-          destination: accounts
 
       - store_artifacts:
           path: screenshots/
