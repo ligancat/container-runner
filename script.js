@@ -35,57 +35,43 @@ async function runIteration(iteration) {
     });
 
     const page = await browser.newPage();
-
-    // Navigate to emailnator.com
     await page.goto('https://emailnator.com');
     
-    // Extract email from the page
     const email = await extractEmail(page);
-
     await setTimeout(2000); // Wait for 2 seconds before saving the email
-    
-    // Save the extracted email to accounts.txt
     await saveEmailToFile(email);
-
     await setTimeout(2000); // Wait for 2 seconds to let the next page load
     
-    // Navigate to alwaysdata.com
     await page.goto('https://www.alwaysdata.com');
     await setTimeout(4000); // Wait for 4 seconds before clicking the button
 
-    // Click the register button
     await page.click('a.btn.free[href="/en/register/?d"]');
     await setTimeout(4000); // Wait for 4 seconds to let the next page load
 
-    // Populate the email input
     await page.waitForSelector('input[name="email"]');
     await page.type('input[name="email"]', email);
     
-    // Populate the password input
     await page.waitForSelector('input[name="password"]');
     await page.type('input[name="password"]', 'Jellyfish90@@@');
 
     await setTimeout(2000); // Wait for 2 seconds
 
-    // Check the credit card validation checkbox
     await page.waitForSelector('input[name="credit_card_validation"]');
     await page.click('input[name="credit_card_validation"]'); // Check the checkbox
 
     await setTimeout(2000); // Wait for 2 seconds
 
-    // Check the privacy policy checkbox
     await page.waitForSelector('input[name="privacy_policy"]');
     await page.click('input[name="privacy_policy"]'); // Check the checkbox
 
     await setTimeout(2000); // Wait for 2 seconds
 
-    // Click the span with text "Create my profile"
-    await page.waitForSelector('button[type="submit"] span'); // Wait for the span to be visible
+    await page.waitForSelector('button[type="submit"] span');
     await page.click('button[type="submit"] span'); // Click the span directly
 
-    // Wait before taking a full-page screenshot
     await setTimeout(4000); // Wait for 4 seconds before taking a screenshot
-    await page.screenshot({ path: `screenshots/screenshot-${iteration}.jpg`, type: 'jpeg', fullPage: true });
+    const screenshotPath = path.join(__dirname, 'screenshots', `screenshot-${iteration}.jpg`);
+    await page.screenshot({ path: screenshotPath, type: 'jpeg', fullPage: true });
     
     console.log(`Completed iteration ${iteration}/2`);
     await browser.close();
