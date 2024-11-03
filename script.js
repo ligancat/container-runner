@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const { setTimeout } = require('node:timers/promises');
 const fs = require('fs');
+const path = require('path'); // Import path module
 
 async function extractEmail(page) {
     await setTimeout(4000); // Wait for 4 seconds
@@ -10,7 +11,8 @@ async function extractEmail(page) {
 }
 
 async function saveEmailToFile(email) {
-    fs.appendFileSync('accounts.txt', email + '\n', (err) => {
+    const filePath = path.join(__dirname, 'accounts.txt'); // Define file path
+    fs.appendFileSync(filePath, email + '\n', (err) => {
         if (err) {
             console.error('Error writing to file:', err);
         } else {
@@ -29,12 +31,12 @@ async function run() {
     // Extract email from the page
     const email = await extractEmail(page);
 
-    await setTimeout(2000); // Wait for 4 seconds to let the next page load
+    await setTimeout(2000); // Wait for 2 seconds before saving the email
     
     // Save the extracted email to accounts.txt
     await saveEmailToFile(email);
 
-    await setTimeout(2000); // Wait for 4 seconds to let the next page load
+    await setTimeout(2000); // Wait for 2 seconds to let the next page load
     
     // Navigate to alwaysdata.com
     await page.goto('https://www.alwaysdata.com');
@@ -52,13 +54,13 @@ async function run() {
     await page.waitForSelector('input[name="password"]');
     await page.type('input[name="password"]', 'Jellyfish90@@@');
 
-    await setTimeout(2000); // Wait for 4 seconds to let the next page load
+    await setTimeout(2000); // Wait for 2 seconds
 
     // Check the credit card validation checkbox
     await page.waitForSelector('input[name="credit_card_validation"]');
     await page.click('input[name="credit_card_validation"]'); // Check the checkbox
 
-    await setTimeout(2000); // Wait for 4 seconds to let the next page load
+    await setTimeout(2000); // Wait for 2 seconds
 
     // Check the privacy policy checkbox
     await page.waitForSelector('input[name="privacy_policy"]');
